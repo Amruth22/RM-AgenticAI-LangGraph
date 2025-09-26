@@ -3,7 +3,15 @@
 import os
 from functools import lru_cache
 from typing import Optional
-from pydantic import BaseSettings, Field
+try:
+    from pydantic import BaseSettings, Field
+except ImportError:
+    try:
+        from pydantic_settings import BaseSettings
+        from pydantic import Field
+    except ImportError:
+        # Fallback for older versions
+        from pydantic import BaseModel as BaseSettings, Field
 
 
 class Settings(BaseSettings):
