@@ -38,6 +38,7 @@ flake8>=6.0.0
 # Monitoring and Logging
 loguru>=0.7.0
 pydantic>=2.4.0
+pydantic-settings>=2.0.0
 
 # Additional dependencies for stability
 typing-extensions>=4.5.0
