@@ -1,0 +1,17 @@
+# Minimal requirements for basic functionality
+streamlit
+pandas
+numpy
+python-dotenv
+scikit-learn
+joblib
+google-generativeai
+pydantic
+loguru
+requests
+typing-extensions
+
+# LangChain essentials (install these step by step if needed)
+langchain
+langchain-google-genai
+langgraph
