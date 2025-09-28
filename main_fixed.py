@@ -1,4 +1,4 @@
-"""Main Streamlit application for RM-AgenticAI-LangGraph system."""
+# This file can be deleted - content moved to main.py
 
 import streamlit as st
 import pandas as pd
