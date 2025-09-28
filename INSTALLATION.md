@@ -233,7 +233,20 @@ If you have trained models, place them in the `models/` directory:
 
 ### Common Issues
 
-**1. Import Errors**
+**1. Pydantic Validation Error (extra_forbidden)**
+```bash
+# Error: pydantic_core._pydantic_core.ValidationError: Extra inputs are not permitted
+# Solution: Run the quick fix script
+python quick_fix.py
+
+# Or run the test script to diagnose
+python test_config.py
+
+# Manual fix: Update config/settings.py to allow extra fields
+# Add 'extra = "ignore"' to the Config class
+```
+
+**2. Import Errors**
 ```bash
 # Solution: Reinstall dependencies
 pip install --force-reinstall -r requirements.txt
