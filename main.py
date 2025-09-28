@@ -260,7 +260,7 @@ def display_analysis_results(state):
             })
         
         rec_df = pd.DataFrame(rec_data)
-        st.dataframe(rec_df, use_container_width=True)
+        st.dataframe(rec_df, width='stretch')
         
         # Justification
         justification_text = safe_get(state, 'recommendations.justification_text')
@@ -303,7 +303,7 @@ def display_agent_performance(state):
             })
         
         perf_df = pd.DataFrame(perf_data)
-        st.dataframe(perf_df, use_container_width=True)
+        st.dataframe(perf_df, width='stretch')
     else:
         # Show default agent status
         default_agents = [
@@ -324,7 +324,7 @@ def display_agent_performance(state):
             })
         
         perf_df = pd.DataFrame(perf_data)
-        st.dataframe(perf_df, use_container_width=True)
+        st.dataframe(perf_df, width='stretch')
 
 def main():
     """Main application."""
