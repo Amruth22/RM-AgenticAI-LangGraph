@@ -68,6 +68,34 @@ def test_imports():
         print(f"\n✅ All {len(imports_to_test)} imports successful")
         return True
 
+def test_missing_imports():
+    """Test for missing import issues."""
+    print("\n🔍 Testing Import Issues")
+    print("-" * 40)
+    
+    try:
+        # Test the specific import that was failing
+        sys.path.insert(0, '.')
+        from langraph_agents.workflows.prospect_analysis_workflow import ProspectAnalysisWorkflow
+        print("✅ ProspectAnalysisWorkflow imported successfully")
+        
+        # Test other critical imports
+        from langraph_agents.agents.risk_assessment_agent import RiskAssessmentAgent
+        from langraph_agents.agents.product_specialist_agent import ProductSpecialistAgent
+        print("✅ Agent imports successful")
+        
+        return True
+        
+    except ModuleNotFoundError as e:
+        print(f"❌ Missing module: {e}")
+        if "product_recommendation_workflow" in str(e):
+            print("   This is a known issue - workflow files are missing")
+            print("   Solution: Run python quick_fix.py")
+        return False
+    except Exception as e:
+        print(f"❌ Import error: {e}")
+        return False
+
 def test_pydantic_settings():
     """Test Pydantic settings configuration."""
     print("\n⚙️ Testing Pydantic Settings")
@@ -137,6 +165,7 @@ def main():
     tests = [
         ("Environment Setup", test_environment_setup),
         ("Critical Imports", test_imports),
+        ("Missing Import Issues", test_missing_imports),
         ("Pydantic Settings", test_pydantic_settings),
         ("Streamlit Compatibility", test_streamlit_compatibility),
     ]
