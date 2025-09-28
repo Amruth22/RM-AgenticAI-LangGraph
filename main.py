@@ -286,6 +286,159 @@ def display_analysis_results(state):
             for action in action_items:
                 st.write(f"• {action}")
 
+def generate_chat_response(query: str, analysis_state) -> str:
+    """Generate AI response to user questions about the analysis."""
+    from langchain_google_genai import ChatGoogleGenerativeAI
+    from langchain_core.prompts import ChatPromptTemplate
+    
+    # Extract key information from analysis state
+    risk_assessment = safe_get(analysis_state, 'analysis.risk_assessment')
+    persona_classification = safe_get(analysis_state, 'analysis.persona_classification')
+    goal_prediction = safe_get(analysis_state, 'analysis.goal_prediction')
+    recommended_products = safe_get(analysis_state, 'recommendations.recommended_products', [])
+    prospect_data = safe_get(analysis_state, 'prospect.prospect_data')
+    
+    # Create context summary
+    context = f"""
+    PROSPECT ANALYSIS SUMMARY:
+    
+    Client Profile:
+    - Name: {safe_get(prospect_data, 'name', 'Unknown')}
+    - Age: {safe_get(prospect_data, 'age', 'Unknown')}
+    - Annual Income: ₹{safe_get(prospect_data, 'annual_income', 0):,}
+    - Current Savings: ₹{safe_get(prospect_data, 'current_savings', 0):,}
+    - Target Goal: ₹{safe_get(prospect_data, 'target_goal_amount', 0):,}
+    - Investment Horizon: {safe_get(prospect_data, 'investment_horizon_years', 0)} years
+    - Experience Level: {safe_get(prospect_data, 'investment_experience_level', 'Unknown')}
+    
+    Analysis Results:
+    - Risk Level: {safe_get(risk_assessment, 'risk_level', 'Unknown')}
+    - Risk Confidence: {safe_get(risk_assessment, 'confidence_score', 0):.1%}
+    - Persona Type: {safe_get(persona_classification, 'persona_type', 'Unknown')}
+    - Goal Success: {safe_get(goal_prediction, 'goal_success', 'Unknown')}
+    - Success Probability: {safe_get(goal_prediction, 'probability', 0):.1%}
+    - Recommended Products: {len(recommended_products)} products
+    
+    Top Product Recommendation: {safe_get(recommended_products[0] if recommended_products else {}, 'product_name', 'None')}
+    """
+    
+    # Create prompt template
+    prompt_template = ChatPromptTemplate.from_messages([
+        ("system", """
+        You are an expert Relationship Manager (RM) Assistant for a financial advisory firm. 
+        You help RMs understand and explain prospect analysis results to provide better client service.
+        
+        Guidelines:
+        - Be professional, knowledgeable, and helpful
+        - Provide specific, actionable insights
+        - Reference the actual analysis data when answering
+        - Suggest concrete next steps when appropriate
+        - Keep responses concise but comprehensive
+        - Use financial advisory terminology appropriately
+        """),
+        ("human", """
+        Based on this prospect analysis:
+        
+        {context}
+        
+        Client Question: {query}
+        
+        Please provide a helpful, professional response that addresses their question using the analysis data.
+        """)
+    ])
+    
+    try:
+        # Initialize LLM
+        llm = ChatGoogleGenerativeAI(
+            model="gemini-2.0-flash",
+            google_api_key=settings.gemini_api_key,
+            temperature=0.3,
+            max_tokens=500
+        )
+        
+        # Generate response
+        chain = prompt_template | llm
+        response = chain.invoke({
+            "context": context,
+            "query": query
+        })
+        
+        return response.content.strip()
+        
+    except Exception as e:
+        logger.error(f"Chat response generation failed: {str(e)}")
+        return generate_fallback_response(query, analysis_state)
+
+def generate_fallback_response(query: str, analysis_state) -> str:
+    """Generate a rule-based response when AI is unavailable."""
+    query_lower = query.lower()
+    
+    risk_level = safe_get(analysis_state, 'analysis.risk_assessment.risk_level', 'Unknown')
+    persona_type = safe_get(analysis_state, 'analysis.persona_classification.persona_type', 'Unknown')
+    goal_success = safe_get(analysis_state, 'analysis.goal_prediction.goal_success', 'Unknown')
+    
+    if any(word in query_lower for word in ['risk', 'risky', 'conservative']):
+        return f"Based on our analysis, this prospect has a **{risk_level}** risk profile. This assessment considers their age, income, investment experience, and financial goals. The {risk_level.lower()} risk level suggests they {'can handle market volatility' if risk_level == 'High' else 'prefer stable investments' if risk_level == 'Low' else 'balance growth and stability'}."
+    
+    elif any(word in query_lower for word in ['persona', 'personality', 'type', 'behavior']):
+        return f"The prospect has been classified as an **{persona_type}** investor. This persona type indicates their investment behavior and preferences, which helps us tailor our recommendations and communication approach accordingly."
+    
+    elif any(word in query_lower for word in ['goal', 'target', 'achieve', 'success']):
+        return f"Our analysis indicates the goal is **{goal_success}** to be achieved. This assessment considers their current financial position, target amount, investment horizon, and market assumptions. We should discuss strategies to {'maintain this positive trajectory' if goal_success == 'Likely' else 'improve their chances of success'}."
+    
+    elif any(word in query_lower for word in ['recommend', 'product', 'invest', 'portfolio']):
+        products = safe_get(analysis_state, 'recommendations.recommended_products', [])
+        if products:
+            top_product = products[0]
+            return f"Our top recommendation is **{safe_get(top_product, 'product_name', 'N/A')}** with a suitability score of {safe_get(top_product, 'suitability_score', 0):.1%}. This aligns with their {risk_level.lower()} risk profile and {persona_type} investment style."
+        else:
+            return "Product recommendations are being generated based on the prospect's risk profile and investment goals. Please check the Product Recommendations section for detailed suggestions."
+    
+    elif any(word in query_lower for word in ['next', 'step', 'action', 'follow']):
+        return f"Based on the analysis, key next steps include: 1) Discuss the {risk_level.lower()} risk assessment with the prospect, 2) Present suitable product recommendations, 3) Address any concerns about goal feasibility, and 4) Schedule a follow-up meeting to finalize the investment strategy."
+    
+    else:
+        return f"I can help you understand this prospect's analysis. They have a **{risk_level}** risk profile, **{persona_type}** investment personality, and their goal is **{goal_success}** to achieve. Feel free to ask about specific aspects like risk factors, product recommendations, or next steps."
+
+def get_suggested_questions(analysis_state) -> list:
+    """Generate contextual suggested questions based on analysis results."""
+    suggestions = []
+    
+    risk_level = safe_get(analysis_state, 'analysis.risk_assessment.risk_level', 'Unknown')
+    goal_success = safe_get(analysis_state, 'analysis.goal_prediction.goal_success', 'Unknown')
+    persona_type = safe_get(analysis_state, 'analysis.persona_classification.persona_type', 'Unknown')
+    
+    # Risk-based suggestions
+    if risk_level == 'High':
+        suggestions.append("What are the main risk factors for this prospect?")
+        suggestions.append("How should I discuss high-risk investments with them?")
+    elif risk_level == 'Low':
+        suggestions.append("What conservative options should I focus on?")
+        suggestions.append("How can we balance safety with growth potential?")
+    
+    # Goal-based suggestions
+    if goal_success == 'Unlikely':
+        suggestions.append("How can we improve their goal success probability?")
+        suggestions.append("What alternative strategies should we consider?")
+    else:
+        suggestions.append("What factors contribute to their goal success?")
+    
+    # Persona-based suggestions
+    if persona_type == 'Aggressive Growth':
+        suggestions.append("What growth opportunities align with their personality?")
+    elif persona_type == 'Cautious Planner':
+        suggestions.append("How do I address their conservative concerns?")
+    
+    # General suggestions
+    suggestions.extend([
+        "What are the key talking points for the next meeting?",
+        "What objections might they have to our recommendations?",
+        "How should I prioritize the product recommendations?",
+        "What compliance considerations should I be aware of?"
+    ])
+    
+    return suggestions[:6]  # Return top 6 suggestions
+
 def display_agent_performance(state):
     """Display agent performance metrics."""
     st.subheader("🤖 Agent Performance")
@@ -466,12 +619,31 @@ def main():
             
             with tab3:
                 st.subheader("💬 RM Chat Assistant")
-                st.info("🚧 Interactive chat functionality coming soon!")
+                st.markdown("**Ask questions about the analysis results and get AI-powered insights!**")
                 
-                # Placeholder for chat interface
-                user_query = st.text_input("Ask a question about this analysis:")
+                # Chat interface
+                user_query = st.text_input(
+                    "Ask a question about this analysis:",
+                    placeholder="e.g., Why was this risk level assigned? What are the key concerns? How can we improve the goal success rate?"
+                )
+                
                 if user_query:
-                    st.write("🤖 **Assistant:** This feature will be available in the next update.")
+                    with st.spinner("🤖 Analyzing your question..."):
+                        try:
+                            response = generate_chat_response(user_query, st.session_state['analysis_result'])
+                            st.markdown("🤖 **RM Assistant:**")
+                            st.info(response)
+                            
+                            # Add some suggested follow-up questions
+                            st.markdown("**💡 Suggested follow-up questions:**")
+                            suggestions = get_suggested_questions(st.session_state['analysis_result'])
+                            for suggestion in suggestions[:3]:
+                                if st.button(suggestion, key=f"suggest_{hash(suggestion)}"):
+                                    st.rerun()
+                                    
+                        except Exception as e:
+                            st.error(f"Sorry, I encountered an error: {str(e)}")
+                            st.info("🤖 **Assistant:** I'm having trouble right now, but you can ask me about risk levels, investment recommendations, goal feasibility, or next steps for this prospect.")
     
     # Footer
     st.markdown("---")
