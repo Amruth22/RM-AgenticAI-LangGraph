@@ -118,8 +118,37 @@ def run_analysis(workflow: ProspectAnalysisWorkflow, prospect_data: Dict[str, An
     
     return loop.run_until_complete(analyze_prospect_async(workflow, prospect_data))
 
-def display_analysis_results(state: WorkflowState):
+def display_analysis_results(state):
     """Display comprehensive analysis results."""
+    
+    # Handle both WorkflowState objects and dictionaries
+    if isinstance(state, dict):
+        # Convert dict to object-like access
+        class StateDict:
+            def __init__(self, data):
+                self.__dict__.update(data)
+            
+            def get_execution_summary(self):
+                agent_executions = getattr(self, 'agent_executions', [])
+                total_executions = len(agent_executions)
+                completed = len([e for e in agent_executions if getattr(e, 'status', 'completed') == 'completed'])
+                failed = len([e for e in agent_executions if getattr(e, 'status', 'running') == 'failed'])
+                
+                total_time = sum([
+                    getattr(e, 'execution_time', 0) for e in agent_executions 
+                    if getattr(e, 'execution_time', None) is not None
+                ])
+                
+                return {
+                    "total_executions": total_executions,
+                    "completed": completed,
+                    "failed": failed,
+                    "success_rate": completed / total_executions if total_executions > 0 else 1,
+                    "total_execution_time": total_time,
+                    "average_execution_time": total_time / completed if completed > 0 else 0
+                }
+        
+        state = StateDict(state)
     
     # Execution Summary
     st.subheader("🔄 Execution Summary")
@@ -141,39 +170,75 @@ def display_analysis_results(state: WorkflowState):
     analysis_col1, analysis_col2 = st.columns(2)
     
     with analysis_col1:
-        if state.analysis.risk_assessment:
+        # Risk Assessment
+        analysis_data = getattr(state, 'analysis', {})
+        if isinstance(analysis_data, dict):
+            risk_assessment = analysis_data.get('risk_assessment')
+        else:
+            risk_assessment = getattr(analysis_data, 'risk_assessment', None)
+        
+        if risk_assessment:
             st.markdown("**🎯 Risk Assessment**")
-            risk = state.analysis.risk_assessment
+            
+            if isinstance(risk_assessment, dict):
+                risk_level = risk_assessment.get('risk_level', 'Unknown')
+                confidence_score = risk_assessment.get('confidence_score', 0)
+                risk_factors = risk_assessment.get('risk_factors', [])
+            else:
+                risk_level = getattr(risk_assessment, 'risk_level', 'Unknown')
+                confidence_score = getattr(risk_assessment, 'confidence_score', 0)
+                risk_factors = getattr(risk_assessment, 'risk_factors', [])
             
             # Check if ML model was used
             model_status = check_model_status()
             if model_status["Risk Assessment"]["loaded"]:
-                st.write(f"**Risk Level:** `{risk.risk_level}` 🤖")
+                st.write(f"**Risk Level:** `{risk_level}` 🤖")
                 st.caption("🤖 ML Model Prediction")
             else:
-                st.write(f"**Risk Level:** `{risk.risk_level}` 📊")
+                st.write(f"**Risk Level:** `{risk_level}` 📊")
                 st.caption("📊 Rule-based Assessment")
             
-            st.write(f"**Confidence:** {risk.confidence_score:.1%}")
+            st.write(f"**Confidence:** {confidence_score:.1%}")
             
-            if risk.risk_factors:
+            if risk_factors:
                 st.write("**Risk Factors:**")
-                for factor in risk.risk_factors[:3]:
+                for factor in risk_factors[:3]:
                     st.write(f"• {factor}")
+            
+            # Risk factors already handled above
         
-        if state.prospect.data_quality_score:
+        # Data Quality
+        prospect_data = getattr(state, 'prospect', {})
+        if isinstance(prospect_data, dict):
+            data_quality_score = prospect_data.get('data_quality_score')
+        else:
+            data_quality_score = getattr(prospect_data, 'data_quality_score', None)
+        
+        if data_quality_score:
             st.markdown("**📈 Data Quality**")
-            quality_score = state.prospect.data_quality_score
-            st.progress(quality_score)
-            st.write(f"Quality Score: {quality_score:.1%}")
+            st.progress(data_quality_score)
+            st.write(f"Quality Score: {data_quality_score:.1%}")
     
     with analysis_col2:
-        if state.analysis.persona_classification:
+        # Persona Classification
+        analysis_data = getattr(state, 'analysis', {})
+        if isinstance(analysis_data, dict):
+            persona_classification = analysis_data.get('persona_classification')
+        else:
+            persona_classification = getattr(analysis_data, 'persona_classification', None)
+        
+        if persona_classification:
             st.markdown("**👤 Persona Classification**")
-            persona = state.analysis.persona_classification
-            st.write(f"**Persona:** `{persona.persona_type}` 🤖")
+            if isinstance(persona_classification, dict):
+                persona_type = persona_classification.get('persona_type', 'Unknown')
+                confidence_score = persona_classification.get('confidence_score', 0)
+            else:
+                persona_type = getattr(persona_classification, 'persona_type', 'Unknown')
+                confidence_score = getattr(persona_classification, 'confidence_score', 0)
+            
+            st.write(f"**Persona:** `{persona_type}` 🤖")
             st.caption("🤖 AI-Generated Classification")
-            st.write(f"**Confidence:** {persona.confidence_score:.1%}")
+            st.write(f"**Confidence:** {confidence_score:.1%}")
             
             if persona.behavioral_insights:
                 st.write("**Key Insights:**")
