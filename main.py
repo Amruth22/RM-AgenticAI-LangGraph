@@ -31,6 +31,39 @@ def get_workflow():
     """Initialize and cache the workflow."""
     return ProspectAnalysisWorkflow()
 
+@st.cache_data
+def check_model_status():
+    """Check the status of ML models."""
+    import joblib
+    from pathlib import Path
+    
+    models_dir = Path("models")
+    model_status = {}
+    
+    # Risk Assessment Model
+    try:
+        risk_model = joblib.load(models_dir / "risk_profile_model.pkl")
+        risk_encoders = joblib.load(models_dir / "label_encoders.pkl")
+        model_status["Risk Assessment"] = {
+            "loaded": True,
+            "info": f"Model: {type(risk_model).__name__}, Encoders: {len(risk_encoders)}"
+        }
+    except Exception:
+        model_status["Risk Assessment"] = {"loaded": False}
+    
+    # Goal Success Model
+    try:
+        goal_model = joblib.load(models_dir / "goal_success_model.pkl")
+        goal_encoders = joblib.load(models_dir / "goal_success_label_encoders.pkl")
+        model_status["Goal Prediction"] = {
+            "loaded": True,
+            "info": f"Model: {type(goal_model).__name__}, Encoders: {len(goal_encoders)}"
+        }
+    except Exception:
+        model_status["Goal Prediction"] = {"loaded": False}
+    
+    return model_status
+
 # Load data
 @st.cache_data
 def load_prospects():
