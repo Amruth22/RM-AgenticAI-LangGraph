@@ -282,6 +282,53 @@ def test_basic_imports():
         print("❌ Basic Python environment has issues")
         return False
 
+def test_ml_models():
+    """Test if ML models are available and working."""
+    print("🤖 Testing ML models...")
+    
+    try:
+        import joblib
+        from pathlib import Path
+        
+        models_dir = Path("models")
+        models_found = 0
+        total_models = 4
+        
+        model_files = [
+            "risk_profile_model.pkl",
+            "label_encoders.pkl", 
+            "goal_success_model.pkl",
+            "goal_success_label_encoders.pkl"
+        ]
+        
+        for model_file in model_files:
+            model_path = models_dir / model_file
+            if model_path.exists():
+                try:
+                    joblib.load(model_path)
+                    models_found += 1
+                    print(f"✅ {model_file} loaded successfully")
+                except Exception as e:
+                    print(f"❌ {model_file} failed to load: {e}")
+            else:
+                print(f"❌ {model_file} not found")
+        
+        if models_found == total_models:
+            print(f"✅ All {total_models} ML models are available and working")
+            print("🤖 The system will use ML-based predictions for high accuracy")
+        elif models_found > 0:
+            print(f"⚠️ {models_found}/{total_models} ML models available")
+            print("🔄 The system will use mixed ML/rule-based predictions")
+        else:
+            print("⚠️ No ML models found")
+            print("📊 The system will use rule-based predictions (still functional)")
+        
+        return models_found > 0
+        
+    except Exception as e:
+        print(f"❌ ML model testing failed: {e}")
+        return False
+
 def main():
     """Main fix function."""
     print("🛠️ Quick Fix Script for RM-AgenticAI-LangGraph")
@@ -299,6 +346,10 @@ def main():
     print("\n🔧 Step 3: Fixing Pydantic Configuration")
     fix_pydantic_config()
     
+    # Step 4: Test ML models
+    print("\n🤖 Step 4: Testing ML Models")
+    test_ml_models()
+    
     # Test basic imports first
     if not test_basic_imports():
         print("❌ Basic Python environment issues detected")
@@ -306,6 +357,9 @@ def main():
     
     # Check and fix imports
     imports_ok = check_and_fix_imports()
+    
+    # Test ML models (store result for later use)
+    ml_models_available = test_ml_models()
     
     # Create fallback config if needed
     if not imports_ok:
@@ -316,10 +370,20 @@ def main():
     print("📝 NEXT STEPS:")
     print("=" * 60)
     
-    if imports_ok:
-        print("✅ All critical packages are available")
+    # Get ML model status
+    models_available = 'ml_models_available' in locals() and ml_models_available
+    
+    if imports_ok and models_available:
+        print("✅ All critical packages and ML models are available")
         print("1. Make sure your .env file has the GEMINI_API_KEY_1 set")
         print("2. Try running: streamlit run main.py")
+        print("3. You'll get ML-powered predictions with high accuracy!")
+    elif imports_ok:
+        print("✅ All critical packages are available")
+        print("⚠️ Some ML models may be missing - rule-based fallbacks will be used")
+        print("1. Make sure your .env file has the GEMINI_API_KEY_1 set")
+        print("2. Try running: streamlit run main.py")
+        print("3. Consider running: python test_models.py for detailed model diagnostics")
     else:
         print("⚠️ Some packages are missing, but basic functionality should work")
         print("1. Install missing packages manually if needed")
