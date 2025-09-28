@@ -60,11 +60,12 @@ class Settings(BaseSettings):
     default_temperature: float = Field(0.1)
     max_tokens: int = Field(4000)
     
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-        case_sensitive = False
-        extra = "ignore"  # Allow extra fields in environment
+    model_config = {
+        "env_file": ".env",
+        "env_file_encoding": "utf-8",
+        "case_sensitive": False,
+        "extra": "ignore"  # Allow extra fields in environment
+    }
 
 
 @lru_cache()
