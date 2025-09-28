@@ -14,6 +14,90 @@ def install_package(package_name):
         print(f"❌ Failed to install {package_name}")
         return False
 
+def create_env_file():
+    """Create .env file from example if it doesn't exist."""
+    print("📝 Creating .env file...")
+    
+    if os.path.exists(".env"):
+        print("✅ .env file already exists")
+        return True
+    
+    if os.path.exists(".env.example"):
+        try:
+            import shutil
+            shutil.copy(".env.example", ".env")
+            print("✅ Created .env from .env.example")
+            print("⚠️ Please edit .env and add your GEMINI_API_KEY_1")
+            return True
+        except Exception as e:
+            print(f"❌ Failed to copy .env.example: {e}")
+    
+    # Create basic .env file
+    try:
+        with open(".env", "w") as f:
+            f.write("""# Google AI API Key (Required)
+GEMINI_API_KEY_1=your_gemini_api_key_here
+
+# LangSmith (Optional)
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_API_KEY=your_langsmith_api_key_here
+LANGCHAIN_PROJECT=rm-agentic-ai
+
+# Application Settings
+LOG_LEVEL=INFO
+ENABLE_MONITORING=true
+DEBUG_MODE=false
+""")
+        print("✅ Created basic .env file")
+        print("⚠️ Please edit .env and add your GEMINI_API_KEY_1")
+        return True
+    except Exception as e:
+        print(f"❌ Failed to create .env file: {e}")
+        return False
+
+def fix_missing_imports():
+    """Fix missing import issues in workflow __init__.py."""
+    print("🔧 Fixing missing imports...")
+    
+    workflow_init = "langraph_agents/workflows/__init__.py"
+    try:
+        with open(workflow_init, 'r') as f:
+            content = f.read()
+        
+        # Check if already fixed
+        if "# TODO: Implement these workflows" in content:
+            print("✅ Workflow imports already fixed")
+            return True
+        
+        # Fix the imports
+        if "from .product_recommendation_workflow import" in content:
+            content = content.replace(
+                "from .product_recommendation_workflow import ProductRecommendationWorkflow",
+                "# from .product_recommendation_workflow import ProductRecommendationWorkflow"
+            )
+            content = content.replace(
+                "from .interactive_chat_workflow import InteractiveChatWorkflow",
+                "# from .interactive_chat_workflow import InteractiveChatWorkflow"
+            )
+            content = content.replace(
+                '    "ProductRecommendationWorkflow",',
+                '    # "ProductRecommendationWorkflow",'
+            )
+            content = content.replace(
+                '    "InteractiveChatWorkflow"',
+                '    # "InteractiveChatWorkflow"'
+            )
+        
+        with open(workflow_init, 'w') as f:
+            f.write(content)
+        
+        print("✅ Fixed workflow import issues")
+        return True
+        
+    except Exception as e:
+        print(f"❌ Failed to fix imports: {e}")
+        return False
+
 def fix_pydantic_config():
     """Fix Pydantic configuration issues."""
     print("🔧 Fixing Pydantic configuration...")
@@ -203,8 +287,16 @@ def main():
     print("🛠️ Quick Fix Script for RM-AgenticAI-LangGraph")
     print("=" * 60)
     
-    # Fix Pydantic configuration first
-    print("\n🔧 Step 1: Fixing Pydantic Configuration")
+    # Step 1: Create .env file
+    print("\n📝 Step 1: Creating .env file")
+    create_env_file()
+    
+    # Step 2: Fix missing imports
+    print("\n🔧 Step 2: Fixing missing imports")
+    fix_missing_imports()
+    
+    # Step 3: Fix Pydantic configuration
+    print("\n🔧 Step 3: Fixing Pydantic Configuration")
     fix_pydantic_config()
     
     # Test basic imports first
