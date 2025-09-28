@@ -387,6 +387,10 @@ def main():
         st.subheader("Analysis Settings")
         show_performance = st.checkbox("Show Agent Performance", value=True)
         show_execution_details = st.checkbox("Show Execution Details", value=False)
+        
+        # Model diagnostics
+        if st.button("🔍 Test ML Models"):
+            st.info("Run: `python test_models.py` in terminal for detailed model diagnostics")
     
     # Main content
     prospects_df = load_prospects()
