@@ -14,9 +14,43 @@ def install_package(package_name):
         print(f"❌ Failed to install {package_name}")
         return False
 
+def fix_pydantic_config():
+    """Fix Pydantic configuration issues."""
+    print("🔧 Fixing Pydantic configuration...")
+    
+    config_file = "config/settings.py"
+    try:
+        with open(config_file, 'r') as f:
+            content = f.read()
+        
+        # Check if the fix is already applied
+        if 'extra = "ignore"' in content or '"extra": "ignore"' in content:
+            print("✅ Pydantic configuration already fixed")
+            return True
+        
+        # Apply the fix
+        if 'class Config:' in content:
+            content = content.replace(
+                'class Config:',
+                'class Config:\n        extra = "ignore"  # Allow extra fields'
+            )
+        
+        with open(config_file, 'w') as f:
+            f.write(content)
+        
+        print("✅ Applied Pydantic configuration fix")
+        return True
+        
+    except Exception as e:
+        print(f"❌ Failed to fix Pydantic config: {e}")
+        return False
+
 def check_and_fix_imports():
     """Check and fix common import issues."""
     print("🔍 Checking and fixing common import issues...")
+    
+    # First fix Pydantic config
+    fix_pydantic_config()
     
     # Check pydantic-settings
     try:
@@ -168,6 +202,10 @@ def main():
     """Main fix function."""
     print("🛠️ Quick Fix Script for RM-AgenticAI-LangGraph")
     print("=" * 60)
+    
+    # Fix Pydantic configuration first
+    print("\n🔧 Step 1: Fixing Pydantic Configuration")
+    fix_pydantic_config()
     
     # Test basic imports first
     if not test_basic_imports():
