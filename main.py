@@ -1,4 +1,4 @@
-"""Main Streamlit application for RM-AgenticAI-LangGraph system - FIXED VERSION"""
+"""Main Streamlit application for RM-AgenticAI-LangGraph system."""
 
 import streamlit as st
 import pandas as pd
@@ -153,16 +153,6 @@ def display_analysis_results(state):
     with col4:
         st.metric("Total Time", "< 30s")
     
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        st.metric("Total Steps", exec_summary['total_executions'])
-    with col2:
-        st.metric("Completed", exec_summary['completed'])
-    with col3:
-        st.metric("Success Rate", f"{exec_summary['success_rate']:.1%}")
-    with col4:
-        st.metric("Total Time", f"{exec_summary['total_execution_time']:.2f}s")
-    
     # Analysis Results
     st.subheader("📊 Analysis Results")
     
@@ -170,23 +160,13 @@ def display_analysis_results(state):
     
     with analysis_col1:
         # Risk Assessment
-        analysis_data = getattr(state, 'analysis', {})
-        if isinstance(analysis_data, dict):
-            risk_assessment = analysis_data.get('risk_assessment')
-        else:
-            risk_assessment = getattr(analysis_data, 'risk_assessment', None)
-        
+        risk_assessment = safe_get(state, 'analysis.risk_assessment')
         if risk_assessment:
             st.markdown("**🎯 Risk Assessment**")
             
-            if isinstance(risk_assessment, dict):
-                risk_level = risk_assessment.get('risk_level', 'Unknown')
-                confidence_score = risk_assessment.get('confidence_score', 0)
-                risk_factors = risk_assessment.get('risk_factors', [])
-            else:
-                risk_level = getattr(risk_assessment, 'risk_level', 'Unknown')
-                confidence_score = getattr(risk_assessment, 'confidence_score', 0)
-                risk_factors = getattr(risk_assessment, 'risk_factors', [])
+            risk_level = safe_get(risk_assessment, 'risk_level', 'Unknown')
+            confidence_score = safe_get(risk_assessment, 'confidence_score', 0)
+            risk_factors = safe_get(risk_assessment, 'risk_factors', [])
             
             # Check if ML model was used
             model_status = check_model_status()
@@ -203,16 +183,9 @@ def display_analysis_results(state):
                 st.write("**Risk Factors:**")
                 for factor in risk_factors[:3]:
                     st.write(f"• {factor}")
-            
-            # Risk factors already handled above
         
         # Data Quality
-        prospect_data = getattr(state, 'prospect', {})
-        if isinstance(prospect_data, dict):
-            data_quality_score = prospect_data.get('data_quality_score')
-        else:
-            data_quality_score = getattr(prospect_data, 'data_quality_score', None)
-        
+        data_quality_score = safe_get(state, 'prospect.data_quality_score')
         if data_quality_score:
             st.markdown("**📈 Data Quality**")
             st.progress(data_quality_score)
@@ -220,28 +193,21 @@ def display_analysis_results(state):
     
     with analysis_col2:
         # Persona Classification
-        analysis_data = getattr(state, 'analysis', {})
-        if isinstance(analysis_data, dict):
-            persona_classification = analysis_data.get('persona_classification')
-        else:
-            persona_classification = getattr(analysis_data, 'persona_classification', None)
-        
+        persona_classification = safe_get(state, 'analysis.persona_classification')
         if persona_classification:
             st.markdown("**👤 Persona Classification**")
-            if isinstance(persona_classification, dict):
-                persona_type = persona_classification.get('persona_type', 'Unknown')
-                confidence_score = persona_classification.get('confidence_score', 0)
-            else:
-                persona_type = getattr(persona_classification, 'persona_type', 'Unknown')
-                confidence_score = getattr(persona_classification, 'confidence_score', 0)
+            
+            persona_type = safe_get(persona_classification, 'persona_type', 'Unknown')
+            confidence_score = safe_get(persona_classification, 'confidence_score', 0)
+            behavioral_insights = safe_get(persona_classification, 'behavioral_insights', [])
             
             st.write(f"**Persona:** `{persona_type}` 🤖")
             st.caption("🤖 AI-Generated Classification")
             st.write(f"**Confidence:** {confidence_score:.1%}")
             
-            if persona.behavioral_insights:
+            if behavioral_insights:
                 st.write("**Key Insights:**")
-                for insight in persona.behavioral_insights[:3]:
+                for insight in behavioral_insights[:3]:
                     st.write(f"• {insight}")
     
     # Goal Prediction Results
@@ -370,6 +336,19 @@ def main():
     # Sidebar
     with st.sidebar:
         st.header("🎛️ Configuration")
+        
+        # Model Status
+        st.subheader("🤖 ML Models Status")
+        model_status = check_model_status()
+        
+        for model_name, status in model_status.items():
+            if status['loaded']:
+                st.success(f"✅ {model_name}")
+                if 'info' in status:
+                    st.caption(status['info'])
+            else:
+                st.error(f"❌ {model_name}")
+                st.caption("Using rule-based fallback")
         
         # Workflow info
         workflow = get_workflow()
