@@ -96,7 +96,11 @@ class RiskAssessmentAgent(CriticalAgent):
             
             # Map prediction to risk level
             risk_mapping = {0: "Low", 1: "Moderate", 2: "High"}
-            risk_level = risk_mapping[prediction]
+            # Handle both numeric and string predictions
+            if isinstance(prediction, str):
+                risk_level = prediction
+            else:
+                risk_level = risk_mapping.get(prediction, "Moderate")
             confidence_score = float(max(probabilities))
             
             return {
