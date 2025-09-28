@@ -144,7 +144,16 @@ def display_analysis_results(state: WorkflowState):
         if state.analysis.risk_assessment:
             st.markdown("**🎯 Risk Assessment**")
             risk = state.analysis.risk_assessment
-            st.write(f"**Risk Level:** `{risk.risk_level}`")
+            
+            # Check if ML model was used
+            model_status = check_model_status()
+            if model_status["Risk Assessment"]["loaded"]:
+                st.write(f"**Risk Level:** `{risk.risk_level}` 🤖")
+                st.caption("🤖 ML Model Prediction")
+            else:
+                st.write(f"**Risk Level:** `{risk.risk_level}` 📊")
+                st.caption("📊 Rule-based Assessment")
+            
             st.write(f"**Confidence:** {risk.confidence_score:.1%}")
             
             if risk.risk_factors:
@@ -162,13 +171,41 @@ def display_analysis_results(state: WorkflowState):
         if state.analysis.persona_classification:
             st.markdown("**👤 Persona Classification**")
             persona = state.analysis.persona_classification
-            st.write(f"**Persona:** `{persona.persona_type}`")
+            st.write(f"**Persona:** `{persona.persona_type}` 🤖")
+            st.caption("🤖 AI-Generated Classification")
             st.write(f"**Confidence:** {persona.confidence_score:.1%}")
             
             if persona.behavioral_insights:
                 st.write("**Key Insights:**")
                 for insight in persona.behavioral_insights[:3]:
                     st.write(f"• {insight}")
+    
+    # Goal Prediction Results
+    if state.analysis.goal_prediction:
+        st.subheader("🎯 Goal Success Analysis")
+        goal = state.analysis.goal_prediction
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            # Check if ML model was used
+            model_status = check_model_status()
+            if model_status["Goal Prediction"]["loaded"]:
+                st.metric("Goal Success", goal.goal_success, help="🤖 ML Model Prediction")
+            else:
+                st.metric("Goal Success", goal.goal_success, help="📊 Rule-based Prediction")
+        
+        with col2:
+            st.metric("Success Probability", f"{goal.probability:.1%}")
+        
+        if goal.success_factors:
+            with st.expander("✅ Success Factors"):
+                for factor in goal.success_factors:
+                    st.write(f"• {factor}")
+        
+        if goal.challenges:
+            with st.expander("⚠️ Challenges"):
+                for challenge in goal.challenges:
+                    st.write(f"• {challenge}")
     
     # Product Recommendations
     if state.recommendations.recommended_products:
@@ -193,6 +230,7 @@ def display_analysis_results(state: WorkflowState):
         if state.recommendations.justification_text:
             st.markdown("**🎯 Recommendation Justification**")
             st.info(state.recommendations.justification_text)
+            st.caption("🤖 AI-Generated Justification")
     
     # Key Insights and Action Items
     col1, col2 = st.columns(2)
@@ -302,6 +340,18 @@ def main():
                     
                     progress_bar.progress(40)
                     status_text.text("Analyzing prospect data...")
+                    
+                    # Show model status
+                    model_status = check_model_status()
+                    ml_models_available = sum(1 for status in model_status.values() if status['loaded'])
+                    total_models = len(model_status)
+                    
+                    if ml_models_available == total_models:
+                        st.info(f"🤖 Using ML models for enhanced accuracy ({ml_models_available}/{total_models} models loaded)")
+                    elif ml_models_available > 0:
+                        st.warning(f"⚠️ Using mixed ML/rule-based analysis ({ml_models_available}/{total_models} models loaded)")
+                    else:
+                        st.warning("📊 Using rule-based analysis (no ML models loaded)")
                     
                     # Execute workflow
                     result_state = run_analysis(workflow, prospect_data)
