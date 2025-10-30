@@ -15,10 +15,10 @@ def train_goal_model():
     model_path = "ml/models/goal_success_model.pkl"
 
     if os.path.exists(model_path):
-        print(f"✅ Goal success model already exists at {model_path}")
+        print(f" Goal success model already exists at {model_path}")
         return True
 
-    print("⚠️ Goal success model training data not available")
+    print(" Goal success model training data not available")
     print("Please provide training dataset in data/ folder")
     return False
 
@@ -45,7 +45,7 @@ async def predict_goal_success(state: WorkflowState) -> WorkflowState:
                 return await predict_goal_success(state)
             else:
                 # Fallback to rule-based prediction
-                print("⚠️ Using rule-based fallback for goal success prediction")
+                print(" Using rule-based fallback for goal success prediction")
 
                 # Simple rule-based goal success assessment
                 success_probability = 0.5  # Default 50%
@@ -71,7 +71,7 @@ async def predict_goal_success(state: WorkflowState) -> WorkflowState:
         state.current_step = "goal_assessed"
 
     except Exception as e:
-        print(f"❌ Goal success prediction error: {str(e)}")
+        print(f" Goal success prediction error: {str(e)}")
         # Fallback prediction
         state.prospect.goal_success_probability = 0.5
         state.current_step = "goal_assessed"

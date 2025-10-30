@@ -15,10 +15,10 @@ def train_risk_model():
     model_path = "ml/models/risk_profile_model.pkl"
 
     if os.path.exists(model_path):
-        print(f"✅ Risk model already exists at {model_path}")
+        print(f" Risk model already exists at {model_path}")
         return True
 
-    print("⚠️ Risk profile model training data not available")
+    print(" Risk profile model training data not available")
     print("Please provide training dataset in data/ folder")
     return False
 
@@ -45,7 +45,7 @@ async def predict_risk_profile(state: WorkflowState) -> WorkflowState:
                 return await predict_risk_profile(state)
             else:
                 # Fallback to rule-based prediction
-                print("⚠️ Using rule-based fallback for risk prediction")
+                print(" Using rule-based fallback for risk prediction")
 
                 # Simple rule-based risk assessment
                 risk_score = 50  # Default medium risk
@@ -65,7 +65,7 @@ async def predict_risk_profile(state: WorkflowState) -> WorkflowState:
         state.current_step = "risk_assessed"
 
     except Exception as e:
-        print(f"❌ Risk prediction error: {str(e)}")
+        print(f" Risk prediction error: {str(e)}")
         # Fallback prediction
         state.prospect.risk_score = 50
         state.prospect.risk_level = "Medium"

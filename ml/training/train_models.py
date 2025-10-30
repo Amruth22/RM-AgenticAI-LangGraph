@@ -10,7 +10,7 @@ from ml.training.predict_goal_success import train_goal_model
 def main():
     """Train all models for the workflow"""
     print("=" * 60)
-    print("🚀 Starting ML Model Training...")
+    print("[START] Starting ML Model Training...")
     print("=" * 60)
 
     models_to_train = [
@@ -20,25 +20,25 @@ def main():
 
     results = {}
     for model_name, train_func in models_to_train:
-        print(f"\n📚 Training {model_name}...")
+        print(f"\n[TRAINING] {model_name}...")
         try:
             success = train_func()
             results[model_name] = success
-            status = "✅ SUCCESS" if success else "⚠️ SKIPPED"
+            status = "[SUCCESS]" if success else "[SKIPPED]"
             print(f"{status}: {model_name}")
         except Exception as e:
-            print(f"❌ ERROR training {model_name}: {str(e)}")
+            print(f"[ERROR] training {model_name}: {str(e)}")
             results[model_name] = False
 
     print("\n" + "=" * 60)
-    print("📊 Training Summary:")
+    print("[SUMMARY] Training Summary:")
     print("=" * 60)
     for model_name, success in results.items():
-        status = "✅" if success else "❌"
+        status = "[OK]" if success else "[FAILED]"
         print(f"{status} {model_name}")
 
     print("\n" + "=" * 60)
-    print("✨ Model training completed!")
+    print("[DONE] Model training completed!")
     print("=" * 60)
 
     return all(results.values())
