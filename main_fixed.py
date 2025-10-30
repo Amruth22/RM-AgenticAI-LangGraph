@@ -17,8 +17,8 @@ st.set_page_config(
 # Import after page config
 from config.settings import get_settings
 from config.logging_config import setup_logging, get_logger
-from langraph_agents.workflows.prospect_analysis_workflow import ProspectAnalysisWorkflow
-from langraph_agents.state_models import WorkflowState
+from prospect_analysis_workflow import ProspectAnalysisWorkflow
+from state_models import WorkflowState
 
 # Initialize
 settings = get_settings()

@@ -4,7 +4,7 @@ from typing import Dict, Any, List
 from langchain_core.prompts import ChatPromptTemplate
 
 from ..base_agent import BaseAgent
-from ..state_models import WorkflowState, MeetingGuide
+from state_models import WorkflowState, MeetingGuide
 from config.settings import get_settings
 
 

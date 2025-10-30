@@ -4,7 +4,7 @@ from typing import Dict, Any, List
 from langchain_core.prompts import ChatPromptTemplate
 
 from ..base_agent import CriticalAgent
-from ..state_models import WorkflowState, ComplianceCheck
+from state_models import WorkflowState, ComplianceCheck
 from config.settings import get_settings
 
 

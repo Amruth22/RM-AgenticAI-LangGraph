@@ -17,8 +17,8 @@ st.set_page_config(
 # Import after page config
 from config.settings import get_settings
 from config.logging_config import setup_logging, get_logger
-from langraph_agents.workflows.prospect_analysis_workflow import ProspectAnalysisWorkflow
-from langraph_agents.state_models import WorkflowState
+from prospect_analysis_workflow import ProspectAnalysisWorkflow
+from state_models import WorkflowState
 
 # Initialize
 settings = get_settings()
@@ -260,7 +260,7 @@ def display_analysis_results(state):
             })
         
         rec_df = pd.DataFrame(rec_data)
-        st.dataframe(rec_df, width='stretch')
+        st.dataframe(rec_df, use_container_width=True)
         
         # Justification
         justification_text = safe_get(state, 'recommendations.justification_text')
@@ -456,7 +456,7 @@ def display_agent_performance(state):
             })
         
         perf_df = pd.DataFrame(perf_data)
-        st.dataframe(perf_df, width='stretch')
+        st.dataframe(perf_df, use_container_width=True)
     else:
         # Show default agent status
         default_agents = [
@@ -477,7 +477,7 @@ def display_agent_performance(state):
             })
         
         perf_df = pd.DataFrame(perf_data)
-        st.dataframe(perf_df, width='stretch')
+        st.dataframe(perf_df, use_container_width=True)
 
 def main():
     """Main application."""

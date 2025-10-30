@@ -76,7 +76,7 @@ def test_missing_imports():
     try:
         # Test the specific import that was failing
         sys.path.insert(0, '.')
-        from langraph_agents.workflows.prospect_analysis_workflow import ProspectAnalysisWorkflow
+        from prospect_analysis_workflow import ProspectAnalysisWorkflow
         print("✅ ProspectAnalysisWorkflow imported successfully")
         
         # Test other critical imports
