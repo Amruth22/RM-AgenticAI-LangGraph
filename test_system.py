@@ -2,6 +2,7 @@
 
 import asyncio
 import sys
+import pytest
 from datetime import datetime
 from typing import Dict, Any
 
@@ -143,13 +144,14 @@ def test_workflow_creation():
         print(f"❌ Workflow creation failed: {e}")
         return False
 
+@pytest.mark.asyncio
 async def test_sample_analysis():
     """Test sample prospect analysis."""
     print("\n🧪 Testing sample analysis...")
-    
+
     try:
         from graph import ProspectAnalysisWorkflow
-        
+
         # Sample prospect data
         sample_prospect = {
             "prospect_id": "TEST001",
@@ -163,38 +165,38 @@ async def test_sample_analysis():
             "investment_experience_level": "Intermediate",
             "investment_goal": "Test Goal"
         }
-        
+
         workflow = ProspectAnalysisWorkflow()
         print("✅ Starting sample analysis...")
-        
+
         # Run analysis with timeout
         try:
             result = await asyncio.wait_for(
                 workflow.analyze_prospect(sample_prospect),
                 timeout=120  # 2 minute timeout
             )
-            
+
             print("✅ Sample analysis completed successfully")
-            
+
             # Check results
             if result.analysis.risk_assessment:
                 print(f"✅ Risk assessment: {result.analysis.risk_assessment.risk_level}")
-            
+
             if result.analysis.persona_classification:
                 print(f"✅ Persona: {result.analysis.persona_classification.persona_type}")
-            
+
             if result.recommendations.recommended_products:
                 print(f"✅ Recommendations: {len(result.recommendations.recommended_products)} products")
-            
+
             exec_summary = result.get_execution_summary()
             print(f"✅ Execution summary: {exec_summary['success_rate']:.1%} success rate")
-            
+
             return True
-            
+
         except asyncio.TimeoutError:
             print("⚠️  Sample analysis timed out (this may be due to API rate limits)")
             return True  # Don't fail the test for timeout
-            
+
     except Exception as e:
         print(f"❌ Sample analysis failed: {e}")
         return False
