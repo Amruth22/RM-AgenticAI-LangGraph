@@ -36,10 +36,10 @@ def check_model_status():
     """Check the status of ML models."""
     import joblib
     from pathlib import Path
-    
-    models_dir = Path("models")
+
+    models_dir = Path("ml/models")
     model_status = {}
-    
+
     # Risk Assessment Model
     try:
         risk_model = joblib.load(models_dir / "risk_profile_model.pkl")
@@ -50,7 +50,7 @@ def check_model_status():
         }
     except Exception:
         model_status["Risk Assessment"] = {"loaded": False}
-    
+
     # Goal Success Model
     try:
         goal_model = joblib.load(models_dir / "goal_success_model.pkl")
@@ -61,7 +61,7 @@ def check_model_status():
         }
     except Exception:
         model_status["Goal Prediction"] = {"loaded": False}
-    
+
     return model_status
 
 # Load data
@@ -496,12 +496,12 @@ def main():
 
         for model_name, status in model_status.items():
             if status['loaded']:
-                st.success(f"✅ {model_name}")
+                st.success(f"✅ {model_name} (ML Model Loaded)")
                 if 'info' in status:
                     st.caption(status['info'])
             else:
-                st.info(f"📊 {model_name}")
-                st.caption("✓ Using rule-based fallback (Graceful degradation active)")
+                st.warning(f"⚠️ {model_name}")
+                st.caption("Using rule-based fallback (Model not available)")
         
         # Workflow info
         workflow = get_workflow()

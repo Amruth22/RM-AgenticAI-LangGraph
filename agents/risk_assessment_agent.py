@@ -68,17 +68,16 @@ class RiskAssessmentAgent(CriticalAgent):
             return self._rule_based_risk_assessment(prospect_data)
         
         try:
-            # Prepare input data
+            # Prepare input data - must match training features
             input_data = {
                 "age": prospect_data.age,
                 "annual_income": prospect_data.annual_income,
                 "current_savings": prospect_data.current_savings,
-                "target_goal_amount": prospect_data.target_goal_amount,
                 "investment_horizon_years": prospect_data.investment_horizon_years,
                 "number_of_dependents": prospect_data.number_of_dependents,
                 "investment_experience_level": prospect_data.investment_experience_level,
             }
-            
+
             input_df = pd.DataFrame([input_data])
             
             # Encode categorical variables

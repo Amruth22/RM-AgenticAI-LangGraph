@@ -95,3 +95,100 @@
 2025-10-30 23:14:32 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Product Specialist Agent
 2025-10-30 23:14:32 | INFO     | agents.product_specialist_agent:_load_products:28 | Loaded 15 products from catalog
 2025-10-30 23:14:32 | INFO     | graph:_build_workflow:59 | Workflow compiled successfully
+2025-10-30 23:15:45 | INFO     | utils.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 23:15:45 | INFO     | graph:_build_workflow:29 | Building prospect analysis workflow
+2025-10-30 23:15:45 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Data Analyst Agent
+2025-10-30 23:15:45 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Risk Assessment Agent
+2025-10-30 23:15:45 | ERROR    | agents.risk_assessment_agent:_load_models:33 | Failed to load risk models: [Errno 2] No such file or directory: 'ml/models/risk_profile_model.pkl'
+2025-10-30 23:15:45 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Persona Agent
+2025-10-30 23:15:45 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Product Specialist Agent
+2025-10-30 23:15:45 | INFO     | agents.product_specialist_agent:_load_products:28 | Loaded 15 products from catalog
+2025-10-30 23:15:45 | INFO     | graph:_build_workflow:59 | Workflow compiled successfully
+2025-10-30 23:18:50 | INFO     | utils.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 23:18:50 | INFO     | graph:_build_workflow:29 | Building prospect analysis workflow
+2025-10-30 23:18:50 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Data Analyst Agent
+2025-10-30 23:18:50 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Risk Assessment Agent
+2025-10-30 23:18:50 | ERROR    | agents.risk_assessment_agent:_load_models:33 | Failed to load risk models: [Errno 2] No such file or directory: 'ml/models/risk_profile_model.pkl'
+2025-10-30 23:18:50 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Persona Agent
+2025-10-30 23:18:50 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Product Specialist Agent
+2025-10-30 23:18:50 | INFO     | agents.product_specialist_agent:_load_products:28 | Loaded 15 products from catalog
+2025-10-30 23:18:50 | INFO     | graph:_build_workflow:59 | Workflow compiled successfully
+2025-10-30 23:22:14 | INFO     | utils.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 23:22:14 | INFO     | graph:_build_workflow:29 | Building prospect analysis workflow
+2025-10-30 23:22:14 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Data Analyst Agent
+2025-10-30 23:22:14 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Risk Assessment Agent
+2025-10-30 23:22:14 | INFO     | agents.risk_assessment_agent:_load_models:31 | Risk assessment models loaded successfully
+2025-10-30 23:22:14 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Persona Agent
+2025-10-30 23:22:14 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Product Specialist Agent
+2025-10-30 23:22:14 | INFO     | agents.product_specialist_agent:_load_products:28 | Loaded 15 products from catalog
+2025-10-30 23:22:14 | INFO     | graph:_build_workflow:59 | Workflow compiled successfully
+2025-10-30 23:22:22 | INFO     | utils.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 23:22:23 | INFO     | utils.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 23:22:23 | INFO     | graph:analyze_prospect:224 | Starting prospect analysis for Jane Smith
+2025-10-30 23:22:23 | INFO     | graph:_data_analysis_node:63 | Executing data analysis node
+2025-10-30 23:22:23 | INFO     | agents.base_agent:run:69 | Starting execution for agent: Data Analyst Agent
+2025-10-30 23:22:23 | INFO     | agents.data_analyst_agent:execute:24 | Starting data analysis and validation
+2025-10-30 23:22:23 | INFO     | agents.data_analyst_agent:execute:49 | Data analysis completed. Quality score: 1.0
+2025-10-30 23:22:23 | INFO     | agents.base_agent:run:86 | Successfully completed execution for agent: Data Analyst Agent
+2025-10-30 23:22:23 | INFO     | graph:_risk_assessment_node:77 | Executing risk assessment node
+2025-10-30 23:22:23 | INFO     | agents.base_agent:run:69 | Starting execution for agent: Risk Assessment Agent
+2025-10-30 23:22:23 | INFO     | agents.risk_assessment_agent:execute:38 | Starting risk assessment
+2025-10-30 23:22:23 | ERROR    | agents.risk_assessment_agent:_ml_risk_assessment:117 | ML risk assessment failed: The feature names should match those that were passed during fit.
+Feature names unseen at fit time:
+- target_goal_amount
+
+2025-10-30 23:22:31 | INFO     | agents.risk_assessment_agent:execute:61 | Risk assessment completed. Risk level: High
+2025-10-30 23:22:31 | INFO     | agents.base_agent:run:86 | Successfully completed execution for agent: Risk Assessment Agent
+2025-10-30 23:22:31 | INFO     | graph:_persona_classification_node:91 | Executing persona classification node
+2025-10-30 23:22:31 | INFO     | agents.base_agent:run:69 | Starting execution for agent: Persona Agent
+2025-10-30 23:22:31 | INFO     | agents.persona_agent:execute:42 | Starting persona classification
+2025-10-30 23:22:37 | INFO     | agents.persona_agent:execute:67 | Persona classification completed: Aggressive Growth
+2025-10-30 23:22:37 | INFO     | agents.base_agent:run:86 | Successfully completed execution for agent: Persona Agent
+2025-10-30 23:22:37 | INFO     | graph:_product_recommendation_node:106 | Executing product recommendation node
+2025-10-30 23:22:37 | INFO     | agents.base_agent:run:69 | Starting execution for agent: Product Specialist Agent
+2025-10-30 23:22:37 | INFO     | agents.product_specialist_agent:execute:71 | Starting product recommendation
+2025-10-30 23:23:48 | INFO     | utils.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 23:23:48 | INFO     | utils.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 23:23:48 | INFO     | utils.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 23:23:48 | INFO     | utils.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 23:23:48 | INFO     | graph:_build_workflow:29 | Building prospect analysis workflow
+2025-10-30 23:23:48 | INFO     | graph:_build_workflow:29 | Building prospect analysis workflow
+2025-10-30 23:23:48 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Data Analyst Agent
+2025-10-30 23:23:48 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Data Analyst Agent
+2025-10-30 23:23:48 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Risk Assessment Agent
+2025-10-30 23:23:48 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Risk Assessment Agent
+2025-10-30 23:23:49 | INFO     | agents.risk_assessment_agent:_load_models:31 | Risk assessment models loaded successfully
+2025-10-30 23:23:49 | INFO     | agents.risk_assessment_agent:_load_models:31 | Risk assessment models loaded successfully
+2025-10-30 23:23:49 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Persona Agent
+2025-10-30 23:23:49 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Persona Agent
+2025-10-30 23:23:49 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Product Specialist Agent
+2025-10-30 23:23:49 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Product Specialist Agent
+2025-10-30 23:23:49 | INFO     | agents.product_specialist_agent:_load_products:28 | Loaded 15 products from catalog
+2025-10-30 23:23:49 | INFO     | agents.product_specialist_agent:_load_products:28 | Loaded 15 products from catalog
+2025-10-30 23:23:49 | INFO     | graph:_build_workflow:59 | Workflow compiled successfully
+2025-10-30 23:23:49 | INFO     | graph:_build_workflow:59 | Workflow compiled successfully
+2025-10-30 23:24:39 | INFO     | utils.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 23:24:40 | INFO     | graph:_build_workflow:29 | Building prospect analysis workflow
+2025-10-30 23:24:40 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Data Analyst Agent
+2025-10-30 23:24:40 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Risk Assessment Agent
+2025-10-30 23:24:40 | INFO     | agents.risk_assessment_agent:_load_models:31 | Risk assessment models loaded successfully
+2025-10-30 23:24:40 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Persona Agent
+2025-10-30 23:24:40 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Product Specialist Agent
+2025-10-30 23:24:40 | INFO     | agents.product_specialist_agent:_load_products:28 | Loaded 15 products from catalog
+2025-10-30 23:24:40 | INFO     | graph:_build_workflow:59 | Workflow compiled successfully
+2025-10-30 23:24:44 | INFO     | utils.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 23:24:46 | INFO     | utils.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 23:24:46 | INFO     | graph:analyze_prospect:224 | Starting prospect analysis for Emily Davis
+2025-10-30 23:24:46 | INFO     | graph:_data_analysis_node:63 | Executing data analysis node
+2025-10-30 23:24:46 | INFO     | agents.base_agent:run:69 | Starting execution for agent: Data Analyst Agent
+2025-10-30 23:24:46 | INFO     | agents.data_analyst_agent:execute:24 | Starting data analysis and validation
+2025-10-30 23:24:46 | INFO     | agents.data_analyst_agent:execute:49 | Data analysis completed. Quality score: 1.0
+2025-10-30 23:24:46 | INFO     | agents.base_agent:run:86 | Successfully completed execution for agent: Data Analyst Agent
+2025-10-30 23:24:46 | INFO     | graph:_risk_assessment_node:77 | Executing risk assessment node
+2025-10-30 23:24:46 | INFO     | agents.base_agent:run:69 | Starting execution for agent: Risk Assessment Agent
+2025-10-30 23:24:46 | INFO     | agents.risk_assessment_agent:execute:38 | Starting risk assessment
+2025-10-30 23:24:55 | INFO     | agents.risk_assessment_agent:execute:61 | Risk assessment completed. Risk level: Medium
+2025-10-30 23:24:55 | ERROR    | agents.base_agent:run:91 | Error in agent Risk Assessment Agent: Output validation failed for agent: Risk Assessment Agent
+2025-10-30 23:24:55 | ERROR    | graph:_risk_assessment_node:85 | Risk assessment failed: Output validation failed for agent: Risk Assessment Agent
+2025-10-30 23:24:55 | ERROR    | graph:analyze_prospect:235 | Prospect analysis failed: Output validation failed for agent: Risk Assessment Agent
+2025-10-30 23:24:55 | ERROR    | __main__:main:601 | Analysis failed: Output validation failed for agent: Risk Assessment Agent
