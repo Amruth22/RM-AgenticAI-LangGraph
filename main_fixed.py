@@ -17,8 +17,8 @@ st.set_page_config(
 # Import after page config
 from config.settings import get_settings
 from config.logging_config import setup_logging, get_logger
-from prospect_analysis_workflow import ProspectAnalysisWorkflow
-from state_models import WorkflowState
+from graph import ProspectAnalysisWorkflow
+from state import WorkflowState
 
 # Initialize
 settings = get_settings()

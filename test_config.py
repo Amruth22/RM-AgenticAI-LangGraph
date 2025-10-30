@@ -76,7 +76,7 @@ def test_missing_imports():
     try:
         # Test the specific import that was failing
         sys.path.insert(0, '.')
-        from prospect_analysis_workflow import ProspectAnalysisWorkflow
+        from graph import ProspectAnalysisWorkflow
         print("✅ ProspectAnalysisWorkflow imported successfully")
         
         # Test other critical imports

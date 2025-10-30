@@ -17,7 +17,7 @@ def test_imports():
         return False
     
     try:
-        from prospect_analysis_workflow import ProspectAnalysisWorkflow
+        from graph import ProspectAnalysisWorkflow
         print("✅ LangGraph workflow imported successfully")
     except ImportError as e:
         print(f"❌ LangGraph workflow import failed: {e}")
@@ -128,7 +128,7 @@ def test_workflow_creation():
     print("\n🔄 Testing workflow creation...")
     
     try:
-        from prospect_analysis_workflow import ProspectAnalysisWorkflow
+        from graph import ProspectAnalysisWorkflow
         
         workflow = ProspectAnalysisWorkflow()
         print("✅ Workflow created successfully")
@@ -148,7 +148,7 @@ async def test_sample_analysis():
     print("\n🧪 Testing sample analysis...")
     
     try:
-        from prospect_analysis_workflow import ProspectAnalysisWorkflow
+        from graph import ProspectAnalysisWorkflow
         
         # Sample prospect data
         sample_prospect = {

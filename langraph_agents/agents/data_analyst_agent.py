@@ -5,7 +5,7 @@ import pandas as pd
 from langchain_core.prompts import ChatPromptTemplate
 
 from ..base_agent import CriticalAgent
-from state_models import WorkflowState, ProspectData, ProspectState
+from state import WorkflowState, ProspectData, ProspectState
 from config.settings import get_settings
 
 
