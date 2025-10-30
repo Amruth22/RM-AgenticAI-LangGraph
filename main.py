@@ -493,15 +493,15 @@ def main():
         # Model Status
         st.subheader("🤖 ML Models Status")
         model_status = check_model_status()
-        
+
         for model_name, status in model_status.items():
             if status['loaded']:
                 st.success(f"✅ {model_name}")
                 if 'info' in status:
                     st.caption(status['info'])
             else:
-                st.error(f"❌ {model_name}")
-                st.caption("Using rule-based fallback")
+                st.info(f"📊 {model_name}")
+                st.caption("✓ Using rule-based fallback (Graceful degradation active)")
         
         # Workflow info
         workflow = get_workflow()
