@@ -210,10 +210,10 @@ class Settings:
         self.output_dir = os.getenv("OUTPUT_DIR", "output")
         
         # Model Settings
-        self.risk_model_path = "models/risk_profile_model.pkl"
-        self.goal_model_path = "models/goal_success_model.pkl"
-        self.risk_encoders_path = "models/label_encoders.pkl"
-        self.goal_encoders_path = "models/goal_success_label_encoders.pkl"
+        self.risk_model_path = "ml/models/risk_profile_model.pkl"
+        self.goal_model_path = "ml/models/goal_success_model.pkl"
+        self.risk_encoders_path = "ml/models/label_encoders.pkl"
+        self.goal_encoders_path = "ml/models/goal_success_label_encoders.pkl"
         
         # Data Files
         self.prospects_csv = "data/input_data/prospects.csv"

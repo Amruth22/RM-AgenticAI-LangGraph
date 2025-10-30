@@ -38,14 +38,14 @@ class Settings(BaseSettings):
     
     # File Paths
     data_dir: str = Field("data", env="DATA_DIR")
-    models_dir: str = Field("models", env="MODELS_DIR")
+    models_dir: str = Field("ml/models", env="MODELS_DIR")
     output_dir: str = Field("output", env="OUTPUT_DIR")
-    
+
     # Model Settings
-    risk_model_path: str = Field("models/risk_profile_model.pkl")
-    goal_model_path: str = Field("models/goal_success_model.pkl")
-    risk_encoders_path: str = Field("models/label_encoders.pkl")
-    goal_encoders_path: str = Field("models/goal_success_label_encoders.pkl")
+    risk_model_path: str = Field("ml/models/risk_profile_model.pkl")
+    goal_model_path: str = Field("ml/models/goal_success_model.pkl")
+    risk_encoders_path: str = Field("ml/models/label_encoders.pkl")
+    goal_encoders_path: str = Field("ml/models/goal_success_label_encoders.pkl")
     
     # Data Files
     prospects_csv: str = Field("data/input_data/prospects.csv")

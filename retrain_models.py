@@ -210,10 +210,10 @@ def test_models():
     
     try:
         # Load models
-        risk_model = joblib.load("models/risk_profile_model.pkl")
-        risk_encoders = joblib.load("models/label_encoders.pkl")
-        goal_model = joblib.load("models/goal_success_model.pkl")
-        goal_encoders = joblib.load("models/goal_success_label_encoders.pkl")
+        risk_model = joblib.load("ml/models/risk_profile_model.pkl")
+        risk_encoders = joblib.load("ml/models/label_encoders.pkl")
+        goal_model = joblib.load("ml/models/goal_success_model.pkl")
+        goal_encoders = joblib.load("ml/models/goal_success_label_encoders.pkl")
         
         # Test with sample data
         sample_data = {
