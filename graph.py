@@ -8,11 +8,11 @@ from langgraph.graph import StateGraph, END
 from langgraph.checkpoint.memory import MemorySaver
 
 from state import WorkflowState, ProspectData
-from langraph_agents.agents.data_analyst_agent import DataAnalystAgent
-from langraph_agents.agents.risk_assessment_agent import RiskAssessmentAgent
-from langraph_agents.agents.persona_agent import PersonaAgent
-from langraph_agents.agents.product_specialist_agent import ProductSpecialistAgent
-from config.logging_config import get_logger
+from agents.data_analyst_agent import DataAnalystAgent
+from agents.risk_assessment_agent import RiskAssessmentAgent
+from agents.persona_agent import PersonaAgent
+from agents.product_specialist_agent import ProductSpecialistAgent
+from utils.logging_config import get_logger
 
 
 class ProspectAnalysisWorkflow:

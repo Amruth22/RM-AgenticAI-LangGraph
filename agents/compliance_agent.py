@@ -3,7 +3,7 @@
 from typing import Dict, Any, List
 from langchain_core.prompts import ChatPromptTemplate
 
-from ..base_agent import CriticalAgent
+from base_agent import CriticalAgent
 from state import WorkflowState, ComplianceCheck
 from config.settings import get_settings
 

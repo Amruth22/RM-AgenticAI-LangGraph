@@ -1,0 +1,55 @@
+2025-10-30 14:15:52 | INFO     | config.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 14:15:52 | INFO     | test_system:test_logging:212 | Test log message
+2025-10-30 14:15:52 | INFO     | langraph_agents.base_agent:__init__:52 | Initialized agent: Risk Assessment Agent
+2025-10-30 14:15:52 | ERROR    | langraph_agents.agents.risk_assessment_agent:_load_models:33 | Failed to load risk models: node array from the pickle has an incompatible dtype:
+- expected: {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+- got     : [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+2025-10-30 14:15:52 | INFO     | langraph_agents.base_agent:__init__:52 | Initialized agent: Goal Planning Agent
+2025-10-30 14:15:52 | INFO     | langraph_agents.agents.goal_planning_agent:_load_models:31 | Goal prediction models loaded successfully
+2025-10-30 14:16:21 | INFO     | config.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 14:16:21 | INFO     | config.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 14:16:21 | INFO     | config.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 14:16:21 | INFO     | config.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 14:16:21 | INFO     | graph:_build_workflow:29 | Building prospect analysis workflow
+2025-10-30 14:16:21 | INFO     | graph:_build_workflow:29 | Building prospect analysis workflow
+2025-10-30 14:16:21 | INFO     | langraph_agents.base_agent:__init__:52 | Initialized agent: Data Analyst Agent
+2025-10-30 14:16:21 | INFO     | langraph_agents.base_agent:__init__:52 | Initialized agent: Data Analyst Agent
+2025-10-30 14:16:21 | INFO     | langraph_agents.base_agent:__init__:52 | Initialized agent: Risk Assessment Agent
+2025-10-30 14:16:21 | INFO     | langraph_agents.base_agent:__init__:52 | Initialized agent: Risk Assessment Agent
+2025-10-30 14:16:21 | ERROR    | langraph_agents.agents.risk_assessment_agent:_load_models:33 | Failed to load risk models: node array from the pickle has an incompatible dtype:
+- expected: {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+- got     : [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+2025-10-30 14:16:21 | ERROR    | langraph_agents.agents.risk_assessment_agent:_load_models:33 | Failed to load risk models: node array from the pickle has an incompatible dtype:
+- expected: {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+- got     : [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+2025-10-30 14:16:21 | INFO     | langraph_agents.base_agent:__init__:52 | Initialized agent: Persona Agent
+2025-10-30 14:16:21 | INFO     | langraph_agents.base_agent:__init__:52 | Initialized agent: Persona Agent
+2025-10-30 14:16:21 | INFO     | langraph_agents.base_agent:__init__:52 | Initialized agent: Product Specialist Agent
+2025-10-30 14:16:21 | INFO     | langraph_agents.base_agent:__init__:52 | Initialized agent: Product Specialist Agent
+2025-10-30 14:16:21 | INFO     | langraph_agents.agents.product_specialist_agent:_load_products:28 | Loaded 15 products from catalog
+2025-10-30 14:16:21 | INFO     | langraph_agents.agents.product_specialist_agent:_load_products:28 | Loaded 15 products from catalog
+2025-10-30 14:16:21 | INFO     | graph:_build_workflow:59 | Workflow compiled successfully
+2025-10-30 14:16:21 | INFO     | graph:_build_workflow:59 | Workflow compiled successfully
+2025-10-30 14:24:07 | INFO     | config.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 14:24:07 | INFO     | test_system:test_logging:212 | Test log message
+2025-10-30 14:24:07 | INFO     | langraph_agents.base_agent:__init__:52 | Initialized agent: Risk Assessment Agent
+2025-10-30 14:24:07 | ERROR    | langraph_agents.agents.risk_assessment_agent:_load_models:33 | Failed to load risk models: node array from the pickle has an incompatible dtype:
+- expected: {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+- got     : [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+2025-10-30 14:24:07 | INFO     | langraph_agents.base_agent:__init__:52 | Initialized agent: Goal Planning Agent
+2025-10-30 14:24:07 | INFO     | langraph_agents.agents.goal_planning_agent:_load_models:31 | Goal prediction models loaded successfully
+2025-10-30 14:24:47 | INFO     | config.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 14:24:47 | INFO     | graph:_build_workflow:29 | Building prospect analysis workflow
+2025-10-30 14:24:47 | INFO     | langraph_agents.base_agent:__init__:52 | Initialized agent: Data Analyst Agent
+2025-10-30 14:24:47 | INFO     | langraph_agents.base_agent:__init__:52 | Initialized agent: Risk Assessment Agent
+2025-10-30 14:24:47 | ERROR    | langraph_agents.agents.risk_assessment_agent:_load_models:33 | Failed to load risk models: node array from the pickle has an incompatible dtype:
+- expected: {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+- got     : [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+2025-10-30 14:24:47 | INFO     | langraph_agents.base_agent:__init__:52 | Initialized agent: Persona Agent
+2025-10-30 14:24:47 | INFO     | langraph_agents.base_agent:__init__:52 | Initialized agent: Product Specialist Agent
+2025-10-30 14:24:47 | INFO     | langraph_agents.agents.product_specialist_agent:_load_products:28 | Loaded 15 products from catalog
+2025-10-30 14:24:47 | INFO     | graph:_build_workflow:59 | Workflow compiled successfully
+2025-10-30 22:32:34 | INFO     | config.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 22:32:34 | INFO     | test_system:test_logging:212 | Test log message
+2025-10-30 22:38:52 | INFO     | config.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 22:38:52 | INFO     | test_system:test_logging:214 | Test log message

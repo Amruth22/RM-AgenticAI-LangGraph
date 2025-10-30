@@ -4,7 +4,7 @@ from typing import Dict, Any, List
 import pandas as pd
 from langchain_core.prompts import ChatPromptTemplate
 
-from ..base_agent import CriticalAgent
+from base_agent import CriticalAgent
 from state import WorkflowState, ProspectData, ProspectState
 from config.settings import get_settings
 
