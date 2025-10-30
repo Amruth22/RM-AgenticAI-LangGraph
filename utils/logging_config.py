@@ -4,7 +4,7 @@ import sys
 from loguru import logger
 from typing import Optional
 
-from .settings import get_settings
+from settings import get_settings
 
 
 def setup_logging(log_level: Optional[str] = None) -> None:

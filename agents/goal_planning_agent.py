@@ -5,9 +5,9 @@ import pandas as pd
 from typing import Dict, Any, List
 from langchain_core.prompts import ChatPromptTemplate
 
-from base_agent import CriticalAgent
+from .base_agent import CriticalAgent
 from state import WorkflowState, GoalPredictionResult
-from config.settings import get_settings
+from settings import get_settings
 
 
 class GoalPlanningAgent(CriticalAgent):

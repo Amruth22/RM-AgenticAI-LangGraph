@@ -53,3 +53,25 @@
 2025-10-30 22:32:34 | INFO     | test_system:test_logging:212 | Test log message
 2025-10-30 22:38:52 | INFO     | config.logging_config:setup_logging:66 | Logging initialized with level: INFO
 2025-10-30 22:38:52 | INFO     | test_system:test_logging:214 | Test log message
+2025-10-30 23:07:13 | INFO     | utils.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 23:07:13 | INFO     | graph:_build_workflow:29 | Building prospect analysis workflow
+2025-10-30 23:07:13 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Data Analyst Agent
+2025-10-30 23:07:13 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Risk Assessment Agent
+2025-10-30 23:07:13 | ERROR    | agents.risk_assessment_agent:_load_models:33 | Failed to load risk models: node array from the pickle has an incompatible dtype:
+- expected: {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+- got     : [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+2025-10-30 23:07:13 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Persona Agent
+2025-10-30 23:07:13 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Product Specialist Agent
+2025-10-30 23:07:13 | INFO     | agents.product_specialist_agent:_load_products:28 | Loaded 15 products from catalog
+2025-10-30 23:07:13 | INFO     | graph:_build_workflow:59 | Workflow compiled successfully
+2025-10-30 23:07:58 | INFO     | utils.logging_config:setup_logging:66 | Logging initialized with level: INFO
+2025-10-30 23:07:58 | INFO     | graph:_build_workflow:29 | Building prospect analysis workflow
+2025-10-30 23:07:58 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Data Analyst Agent
+2025-10-30 23:07:58 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Risk Assessment Agent
+2025-10-30 23:07:58 | ERROR    | agents.risk_assessment_agent:_load_models:33 | Failed to load risk models: node array from the pickle has an incompatible dtype:
+- expected: {'names': ['left_child', 'right_child', 'feature', 'threshold', 'impurity', 'n_node_samples', 'weighted_n_node_samples', 'missing_go_to_left'], 'formats': ['<i8', '<i8', '<i8', '<f8', '<f8', '<i8', '<f8', 'u1'], 'offsets': [0, 8, 16, 24, 32, 40, 48, 56], 'itemsize': 64}
+- got     : [('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'), ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'), ('weighted_n_node_samples', '<f8')]
+2025-10-30 23:07:58 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Persona Agent
+2025-10-30 23:07:58 | INFO     | agents.base_agent:__init__:52 | Initialized agent: Product Specialist Agent
+2025-10-30 23:07:58 | INFO     | agents.product_specialist_agent:_load_products:28 | Loaded 15 products from catalog
+2025-10-30 23:07:58 | INFO     | graph:_build_workflow:59 | Workflow compiled successfully

@@ -3,9 +3,9 @@
 from typing import Dict, Any, List
 from langchain_core.prompts import ChatPromptTemplate
 
-from base_agent import OptionalAgent
+from .base_agent import OptionalAgent
 from state import WorkflowState
-from config.settings import get_settings
+from settings import get_settings
 
 
 class PortfolioOptimizerAgent(OptionalAgent):

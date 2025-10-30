@@ -4,9 +4,9 @@ import pandas as pd
 from typing import Dict, Any, List
 from langchain_core.prompts import ChatPromptTemplate
 
-from base_agent import CriticalAgent
+from .base_agent import CriticalAgent
 from state import WorkflowState, ProductRecommendation
-from config.settings import get_settings
+from settings import get_settings
 
 
 class ProductSpecialistAgent(CriticalAgent):

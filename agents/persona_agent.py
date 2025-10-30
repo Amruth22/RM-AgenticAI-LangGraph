@@ -3,9 +3,9 @@
 from typing import Dict, Any, List
 from langchain_core.prompts import ChatPromptTemplate
 
-from base_agent import BaseAgent
+from .base_agent import BaseAgent
 from state import WorkflowState, PersonaResult
-from config.settings import get_settings
+from settings import get_settings
 
 
 class PersonaAgent(BaseAgent):

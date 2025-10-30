@@ -11,8 +11,8 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-from config.settings import get_settings
-from .state_models import WorkflowState, AgentExecution
+from settings import get_settings
+from state import WorkflowState, AgentExecution
 
 
 class BaseAgent(ABC):
